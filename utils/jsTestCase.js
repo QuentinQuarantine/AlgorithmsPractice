@@ -7,7 +7,7 @@ module.exports = function testCase(fn) {
       );
     } else {
       console.error(
-        `${name}: running params ${params}, expected ${expected} but got ${response}`
+        `ERROR - 🚨🚨🚨🚨 - ${name}: running params ${params}, expected ${expected} but got ${response}`
       );
     }
   };
