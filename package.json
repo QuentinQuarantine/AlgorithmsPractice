@@ -1,0 +1,19 @@
+{
+  "name": "AlgorithmsPractice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/QuentinQuarantine/AlgorithmsPractice",
+  "author": "QuentinQuarantineCo",
+  "scripts": {
+    "test": "jest"
+  },
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^26.0.1",
+    "jest": "^26.0.1"
+  }
+}

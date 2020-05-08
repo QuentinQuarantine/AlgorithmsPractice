@@ -1,5 +1,3 @@
-const testCase = require('../../utils/jsTestCase');
-
 // https://app.codesignal.com/challenge/niL5z2ZY5DPuHGiro
 
 /* To prepare his students for an upcoming game, 
@@ -30,13 +28,15 @@ function lineUp(commands) {
   return result;
 }
 
-const tc = testCase(lineUp);
+export default lineUp;
 
-tc(['LLARL'], 3, 'test 1');
-tc(['RLR'], 1, 'test 2');
-tc([''], 0, 'test 3');
-tc(['L'], 0, 'test 4');
-tc(['A'], 1, 'test 5');
-tc(['AAAAAAAAAAAAAAA'], 15, 'test 6');
-tc(['RRRRRRRRRRLLLLLLLLLRRRRLLLLLLLLLL'], 16, 'test 7');
-tc(['AALAAALARAR'], 5, 'test 8');
+export const testParams = [
+  [['LLARL'], 3, 'test 1'],
+  [['RLR'], 1, 'test 2'],
+  [[''], 0, 'test 3'],
+  [['L'], 0, 'test 4'],
+  [['A'], 1, 'test 5'],
+  [['AAAAAAAAAAAAAAA'], 15, 'test 6'],
+  [['RRRRRRRRRRLLLLLLLLLRRRRLLLLLLLLLL'], 16, 'test 7'],
+  [['AALAAALARAR'], 5, 'test 8'],
+];

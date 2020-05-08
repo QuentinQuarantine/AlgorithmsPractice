@@ -6,7 +6,7 @@ module.exports = function testCase(fn) {
         `${name}: running params ${params}, got expected response ${expected}`
       );
     } else {
-      console.error(
+      throw new Error(
         `ERROR - 🚨🚨🚨🚨 - ${name}: running params ${params}, expected ${expected} but got ${response}`
       );
     }
