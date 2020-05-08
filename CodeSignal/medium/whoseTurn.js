@@ -54,13 +54,13 @@ function whoseTurn(p) {
 
 const tc = testCase(whoseTurn);
 
-tc('b1;g1;b8;g8', true, 'test1');
-tc('c3;g1;b8;g8', false, 'test2');
-tc('g1;g2;g3;g4', true, 'test3');
-tc('f8;h1;f3;c2', false, 'test4');
-tc('a5;d3;c4;h3', false, 'test5');
-tc('f8;g1;h2;h5', false, 'test6');
-tc('a6;g1;a5;a4', true, 'test7');
-tc('g5;h1;a2;h5', false, 'test8');
-tc('e1;f7;f8;b4', false, 'test9');
-tc('g2;d7;h5;h1', true, 'test10');
+tc(['b1;g1;b8;g8'], true, 'test1');
+tc(['c3;g1;b8;g8'], false, 'test2');
+tc(['g1;g2;g3;g4'], true, 'test3');
+tc(['f8;h1;f3;c2'], false, 'test4');
+tc(['a5;d3;c4;h3'], false, 'test5');
+tc(['f8;g1;h2;h5'], false, 'test6');
+tc(['a6;g1;a5;a4'], true, 'test7');
+tc(['g5;h1;a2;h5'], false, 'test8');
+tc(['e1;f7;f8;b4'], false, 'test9');
+tc(['g2;d7;h5;h1'], true, 'test10');

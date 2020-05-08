@@ -32,11 +32,11 @@ function lineUp(commands) {
 
 const tc = testCase(lineUp);
 
-tc('LLARL', 3, 'test 1');
-tc('RLR', 1, 'test 2');
-tc('', 0, 'test 3');
-tc('L', 0, 'test 4');
-tc('A', 1, 'test 5');
-tc('AAAAAAAAAAAAAAA', 15, 'test 6');
-tc('RRRRRRRRRRLLLLLLLLLRRRRLLLLLLLLLL', 16, 'test 7');
-tc('AALAAALARAR', 5, 'test 8');
+tc(['LLARL'], 3, 'test 1');
+tc(['RLR'], 1, 'test 2');
+tc([''], 0, 'test 3');
+tc(['L'], 0, 'test 4');
+tc(['A'], 1, 'test 5');
+tc(['AAAAAAAAAAAAAAA'], 15, 'test 6');
+tc(['RRRRRRRRRRLLLLLLLLLRRRRLLLLLLLLLL'], 16, 'test 7');
+tc(['AALAAALARAR'], 5, 'test 8');
