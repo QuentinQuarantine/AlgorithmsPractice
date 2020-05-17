@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 """
 https://app.codesignal.com/challenge/XsSLjHmsgGXvKcfmK
 
@@ -37,6 +38,4 @@ def testCase(fn):
         assert result == expected, "%s: params: %s; expected: %s; result: %s" % (name, params, expected, result)
     return tryCase
 
-tc = testCase(reverseSentence)
-
-tc("man dog", "dog man", "teste 1")
+testParams = [["man dog", "dog man", "teste 1"]]

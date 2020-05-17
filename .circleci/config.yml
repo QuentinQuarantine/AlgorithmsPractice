@@ -1,8 +1,19 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  python: circleci/python@0.2.1
 jobs:
-  build-and-test:
+  build-and-test-python:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: python -m unittest discover -p '*_test.py'
+          name: Test
+  build-and-test-node:
     executor:
       name: node/default
     steps:
@@ -12,6 +23,7 @@ jobs:
             - run: npm install
             - run: npm test
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build-and-test:
+    jobs:
+      - build-and-test-node
+      - build-and-test-python

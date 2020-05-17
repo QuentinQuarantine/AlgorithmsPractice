@@ -1,3 +1,5 @@
+# -*- coding: latin-1 -*-
+
 # https://app.codesignal.com/challenge/9f8eBGpmyCF4KC42h
 
 # The wicked witch has captured the prince and imprisoned him in the bottom-right corner of a dungeon! 
