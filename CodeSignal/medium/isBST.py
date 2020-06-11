@@ -1,11 +1,15 @@
 # https://app.codesignal.com/challenge/Ki75RvRmckcnTrihG
 
 """
-A tree is considered a binary search tree (BST) if for each of its nodes the following is true:
+A tree is considered a binary search tree (BST) if for each of 
+its nodes the following is true:
 
-The left subtree of a node contains only nodes with keys less than the node's key.
-The right subtree of a node contains only nodes with keys greater than the node's key.
-Both the left and the right subtrees must also be binary search trees.
+1. The left subtree of a node contains only nodes with keys less 
+than the node's key.
+2. The right subtree of a node contains only nodes with keys greater 
+than the node's key.
+3. Both the left and the right subtrees must also be binary search trees.
+
 An empty tree (has no nodes) is also considered to be BST.
 
 Given a binary tree, determine whether it is a BST or not.
