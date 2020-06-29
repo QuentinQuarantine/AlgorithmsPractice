@@ -1,5 +1,3 @@
-const testCase = require('../../utils/jsTestCase');
-
 // https://app.codesignal.com/challenge/nHiWHspMRaJTtn9W3
 
 /*
@@ -42,329 +40,192 @@ parts[i] ≠ parts[j].
 */
 
 function findSubstrings__PerformanceProblems(words, parts) {
-  parts = parts.sort((a, b) => b.length - a.length);
-  return words.map((word) => {
+  parts = parts.sort((a, b) => b.length - a.length)
+  return words.map(word => {
     const [len, indx] = parts.reduce(
       ([bestMatchlen, bestMatchidx], part) => {
-        const plen = part.length;
+        const plen = part.length
         if (plen < bestMatchlen) {
-          return [bestMatchlen, bestMatchidx];
+          return [bestMatchlen, bestMatchidx]
         }
-        const idx = word.indexOf(part);
+        const idx = word.indexOf(part)
         if (idx > -1 && (plen > bestMatchlen || idx < bestMatchidx)) {
-          return [plen, idx];
+          return [plen, idx]
         }
-        return [bestMatchlen, bestMatchidx];
+        return [bestMatchlen, bestMatchidx]
       },
       [0, 0]
-    );
+    )
     return len > 0
-      ? `${word.slice(0, indx)}[${word.slice(indx, indx + len)}]${word.slice(
-          indx + len
-        )}`
-      : word;
-  });
+      ? `${word.slice(0, indx)}[${word.slice(indx, indx + len)}]${word.slice(indx + len)}`
+      : word
+  })
 }
 
 // by using set.has we fixed the performance issues, but the code is a bit less readable/maintainable :(
 
-function findSubstrings(words, parts) {
-  const partsSet = {};
+export default function findSubstrings(words, parts) {
+  const partsSet = {}
   for (let p of parts) {
     if (!partsSet[p.length]) {
-      partsSet[p.length] = new Set();
+      partsSet[p.length] = new Set()
     }
-    partsSet[p.length].add(p);
+    partsSet[p.length].add(p)
   }
-  const keys = Object.keys(partsSet).sort((b, a) => a - b);
-  const results = [];
+  const keys = Object.keys(partsSet).sort((b, a) => a - b)
+  const results = []
   for (let word of words) {
-    let [len, indx] = [0, 0];
+    let [len, indx] = [0, 0]
     for (let j = 0; j < keys.length; j++) {
-      const plen = parseInt(keys[j]);
+      const plen = parseInt(keys[j])
       if (plen < len) {
-        break;
+        break
       }
       for (let i = 0; !len && i + plen <= word.length; i++) {
-        const wi = word.slice(i, i + plen);
+        const wi = word.slice(i, i + plen)
         if (partsSet[plen].has(wi)) {
-          len = plen;
-          indx = i;
+          len = plen
+          indx = i
         }
       }
     }
     if (len > 0) {
-      word = word.split('');
-      word.splice(indx + len, 0, ']');
-      word.splice(indx, 0, '[');
-      results.push(word.join(''));
+      word = word.split('')
+      word.splice(indx + len, 0, ']')
+      word.splice(indx, 0, '[')
+      results.push(word.join(''))
     } else {
-      results.push(word);
+      results.push(word)
     }
   }
-  return results;
+  return results
 }
 
-const tc = testCase(findSubstrings);
-const tc1 = testCase(findSubstrings__PerformanceProblems);
-
-tc(
+export const testParams = [
   [
-    ['Apple', 'Melon', 'Orange', 'Watermelon'],
-    ['a', 'mel', 'lon', 'el', 'An'],
+    [
+      ['Apple', 'Melon', 'Orange', 'Watermelon'],
+      ['a', 'mel', 'lon', 'el', 'An'],
+    ],
+    ['Apple', 'Me[lon]', 'Or[a]nge', 'Water[mel]on'],
+    'test1',
   ],
-  ['Apple', 'Me[lon]', 'Or[a]nge', 'Water[mel]on'],
-  'test1'
-);
-tc(
   [
-    ['Aaaaaaaaa', 'bcdEFGh'],
-    ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz'],
+    [
+      ['Aaaaaaaaa', 'bcdEFGh'],
+      ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz'],
+    ],
+    ['A[aaaaa]aaa', 'bcd[E]FGh'],
+    'test2',
   ],
-  ['A[aaaaa]aaa', 'bcd[E]FGh'],
-  'test2'
-);
-tc(
-  [[], ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz', 'a', 'mel', 'lon', 'el', 'An']],
-  [],
-  'test3'
-);
-tc(
-  [['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'], []],
-  ['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'],
-  'test4'
-);
-tc(
+  [[[], ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz', 'a', 'mel', 'lon', 'el', 'An']], [], 'test3'],
   [
+    [['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'], []],
+    ['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'],
+    'test4',
+  ],
+  [
+    [
+      [
+        'neuroses',
+        'myopic',
+        'sufficient',
+        'televise',
+        'coccidiosis',
+        'gules',
+        'during',
+        'construe',
+        'establish',
+        'ethyl',
+      ],
+      [
+        'aaaaa',
+        'Aaaa',
+        'E',
+        'z',
+        'Zzzzz',
+        'a',
+        'mel',
+        'lon',
+        'el',
+        'An',
+        'ise',
+        'd',
+        'g',
+        'wnoVV',
+        'i',
+        'IUMc',
+        'P',
+        'KQ',
+        'QfRz',
+        'Xyj',
+        'yiHS',
+      ],
+    ],
     [
       'neuroses',
-      'myopic',
-      'sufficient',
-      'televise',
-      'coccidiosis',
-      'gules',
-      'during',
+      'myop[i]c',
+      'suff[i]cient',
+      'telev[ise]',
+      'cocc[i]diosis',
+      '[g]ules',
+      '[d]uring',
       'construe',
-      'establish',
+      'est[a]blish',
       'ethyl',
     ],
-    [
-      'aaaaa',
-      'Aaaa',
-      'E',
-      'z',
-      'Zzzzz',
-      'a',
-      'mel',
-      'lon',
-      'el',
-      'An',
-      'ise',
-      'd',
-      'g',
-      'wnoVV',
-      'i',
-      'IUMc',
-      'P',
-      'KQ',
-      'QfRz',
-      'Xyj',
-      'yiHS',
-    ],
+    'test5',
   ],
-  [
-    'neuroses',
-    'myop[i]c',
-    'suff[i]cient',
-    'telev[ise]',
-    'cocc[i]diosis',
-    '[g]ules',
-    '[d]uring',
-    'construe',
-    'est[a]blish',
-    'ethyl',
-  ],
-  'test5'
-);
-tc([['abc'], ['abc']], ['[abc]'], 'test6');
-tc([['abc'], ['ABC']], ['abc'], 'test7');
-tc([['a', 'b'], ['b']], ['a', '[b]'], 'test8');
-tc(
+  [[['abc'], ['abc']], ['[abc]'], 'test6'],
+  [[['abc'], ['ABC']], ['abc'], 'test7'],
+  [[['a', 'b'], ['b']], ['a', '[b]'], 'test8'],
   [
     [
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
+      [
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'aaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
+      ],
+      [
+        'aaaaa',
+        'bbbbb',
+        'a',
+        'aa',
+        'aaaa',
+        'AAAAA',
+        'aaa',
+        'aba',
+        'aaaab',
+        'c',
+        'bbbb',
+        'd',
+        'g',
+        'ccccc',
+        'B',
+        'C',
+        'P',
+        'D',
+      ],
     ],
     [
-      'aaaaa',
-      'bbbbb',
-      'a',
-      'aa',
-      'aaaa',
-      'AAAAA',
-      'aaa',
-      'aba',
-      'aaaab',
-      'c',
-      'bbbb',
-      'd',
-      'g',
-      'ccccc',
-      'B',
-      'C',
-      'P',
-      'D',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
+      '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaac',
     ],
+    'test9',
   ],
-  [
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaac',
-  ],
-  'test9'
-);
-tc1(
-  [
-    ['Apple', 'Melon', 'Orange', 'Watermelon'],
-    ['a', 'mel', 'lon', 'el', 'An'],
-  ],
-  ['Apple', 'Me[lon]', 'Or[a]nge', 'Water[mel]on'],
-  'test1 - performance issues'
-);
-tc1(
-  [
-    ['Aaaaaaaaa', 'bcdEFGh'],
-    ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz'],
-  ],
-  ['A[aaaaa]aaa', 'bcd[E]FGh'],
-  'test2 - performance issues'
-);
-tc1(
-  [[], ['aaaaa', 'Aaaa', 'E', 'z', 'Zzzzz', 'a', 'mel', 'lon', 'el', 'An']],
-  [],
-  'test3 - performance issues'
-);
-tc1(
-  [['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'], []],
-  ['Aaaaaaaaa', 'bcdEFGh', 'Apple', 'Melon', 'Orange', 'Watermelon'],
-  'test4 - performance issues'
-);
-tc1(
-  [
-    [
-      'neuroses',
-      'myopic',
-      'sufficient',
-      'televise',
-      'coccidiosis',
-      'gules',
-      'during',
-      'construe',
-      'establish',
-      'ethyl',
-    ],
-    [
-      'aaaaa',
-      'Aaaa',
-      'E',
-      'z',
-      'Zzzzz',
-      'a',
-      'mel',
-      'lon',
-      'el',
-      'An',
-      'ise',
-      'd',
-      'g',
-      'wnoVV',
-      'i',
-      'IUMc',
-      'P',
-      'KQ',
-      'QfRz',
-      'Xyj',
-      'yiHS',
-    ],
-  ],
-  [
-    'neuroses',
-    'myop[i]c',
-    'suff[i]cient',
-    'telev[ise]',
-    'cocc[i]diosis',
-    '[g]ules',
-    '[d]uring',
-    'construe',
-    'est[a]blish',
-    'ethyl',
-  ],
-  'test5 - performance issues'
-);
-tc1([['abc'], ['abc']], ['[abc]'], 'test6 - performance issues');
-tc1([['abc'], ['ABC']], ['abc'], 'test7 - performance issues');
-tc1([['a', 'b'], ['b']], ['a', '[b]'], 'test8 - performance issues');
-tc1(
-  [
-    [
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaab',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-      'aaaaaaaaaaaaaaaaaaaaaaaaaaaaac',
-    ],
-    [
-      'aaaaa',
-      'bbbbb',
-      'a',
-      'aa',
-      'aaaa',
-      'AAAAA',
-      'aaa',
-      'aba',
-      'aaaab',
-      'c',
-      'bbbb',
-      'd',
-      'g',
-      'ccccc',
-      'B',
-      'C',
-      'P',
-      'D',
-    ],
-  ],
-  [
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaab',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaaa',
-    '[aaaaa]aaaaaaaaaaaaaaaaaaaaaaaac',
-  ],
-  'test9 - performance issues'
-);
+]
