@@ -26,10 +26,12 @@ def move(current_state, dice_value, snakes=None, ladders=None):
 
     for (head, tail) in snakes:
         if head == new_state:
+            print(f"Oh no! I am falling from {head} to {tail}.")
             return tail
 
     for (bottom, top) in ladders:
         if bottom == new_state:
+            print(f"Uhul! I am climbing a ladder from {bottom} to {top}.")
             return top
 
     return new_state
@@ -52,6 +54,7 @@ def has_won(state):
 
 def play(state):
     die = die_roll()
+    print(f'Die value: {die}')
     state = move(state, die)
     return has_won(state)
 
@@ -66,12 +69,16 @@ def next_turn(current_player, players):
 
 
 def demo_gameplay(players, number_of_turns=10):
-    whose_turn = 0
     players_order = determine_player_order(players)
     players_state = {player: reset() for player in players}
-
-    # first player play
-    # change whose turn
+    snakes = [(20, 10), (99, 1), (45, 12), (73, 51)]
+    ladders = [(13, 44), (25, 39), (7, 18), (4, 68)]
+    for turn in range(number_of_turns):
+        print(f'Turn:{turn}')
+        players_state[players_order[0]] = move(players_state[players_order[0]], die_roll(), snakes=snakes, ladders=ladders)
+        print(f'{players_order[0]} moved to {players_state[players_order[0]]}')
+        players_state[players_order[1]] = move(players_state[players_order[1]], die_roll(), snakes=snakes, ladders=ladders)
+        print(f'{players_order[1]} moved to {players_state[players_order[1]]}')
 
 
 def determine_player_order(players):
