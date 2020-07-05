@@ -56,6 +56,24 @@ def play(state):
     return has_won(state)
 
 
+def next_turn(current_player, players):
+    """
+    params: 
+    current_player: number - index of the current player's turn in the players list
+    players: list of players
+    """
+    return players[1 if current_player == 0 else 0]
+
+
+def demo_gameplay(players, number_of_turns=10):
+    whose_turn = 0
+    players_order = determine_player_order(players)
+    players_state = {player: reset() for player in players}
+
+    # first player play
+    # change whose turn
+
+
 def determine_player_order(players):
     players_dict = {}
     while True:

@@ -3,7 +3,8 @@ from unittest import mock
 from AgileKatas.snake_ladders import (
     move, reset,
     die_roll, has_won,
-    play, determine_player_order
+    play, determine_player_order,
+    next_turn
 )
 
 
@@ -73,6 +74,7 @@ class TestSum(unittest.TestCase):
         mocked_randint.return_value = 4
         self.assertFalse(play(97))
 
+    # determine_player_order
     @mock.patch('AgileKatas.snake_ladders.randint')
     def test_determine_player_order_player_2_goes_first(self, mocked_randint):
         mocked_randint.side_effect = [1, 6]
@@ -119,4 +121,15 @@ class TestSum(unittest.TestCase):
         self.assertEqual(
             player_order,
             ['Player_1', 'Player_2']
+        )
+    # next_turn
+
+    def test_next_turn(self):
+        self.assertEqual(
+            next_turn(0, ['Player_1', 'Player_2']),
+            'Player_2'
+        )
+        self.assertEqual(
+            next_turn(1, ['Player_1', 'Player_2']),
+            'Player_1'
         )
