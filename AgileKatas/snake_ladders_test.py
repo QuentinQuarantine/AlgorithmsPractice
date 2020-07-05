@@ -1,5 +1,6 @@
 import unittest
-from AgileKatas.snake_ladders import move, reset, die_roll
+from unittest import mock
+from AgileKatas.snake_ladders import move, reset, die_roll, has_won, play
 
 
 class TestSum(unittest.TestCase):
@@ -16,6 +17,12 @@ class TestSum(unittest.TestCase):
         state = move(state, 3)
         self.assertEqual(move(state, 4), 8)
 
+    def test_cannot_move_if_state_greater_than_100(self):
+        self.assertEqual(
+            move(97, 4),
+            97
+        )
+
     def test_six_sides_die_roll(self):
         for _ in range(50):
             with self.subTest():
@@ -26,3 +33,13 @@ class TestSum(unittest.TestCase):
         state_previous = reset()
         state_later = move(state_previous, die_value)
         self.assertEqual(state_previous + die_value, state_later)
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_has_won(self, mocked_randint):
+        mocked_randint.return_value = 3
+        self.assertTrue(play(97))
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_has_not_won(self, mocked_randint):
+        mocked_randint.return_value = 4
+        self.assertFalse(play(97))

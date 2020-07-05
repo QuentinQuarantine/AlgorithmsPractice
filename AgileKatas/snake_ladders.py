@@ -2,7 +2,8 @@
 
 from random import randint
 
-def move(state, dice_value):
+
+def move(current_state, dice_value):
     """
     params:
     state: int - player's current position in the board
@@ -10,14 +11,30 @@ def move(state, dice_value):
 
     return: int - state after movement
     """
-    return state + dice_value
+
+    new_state = current_state + dice_value
+
+    if new_state > 100:
+        return current_state
+    return new_state
 
 
 def reset():
     return 1
+
 
 def die_roll():
     """
     return: int - amount of steps to take in the board
     """
     return randint(1, 6)
+
+
+def has_won(state):
+    return state == 100
+
+
+def play(state):
+    die = die_roll()
+    state = move(state, die)
+    return has_won(state)
