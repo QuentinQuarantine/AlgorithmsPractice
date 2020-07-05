@@ -3,17 +3,21 @@
 from random import randint
 
 
-def move(current_state, dice_value, snakes=None):
+def move(current_state, dice_value, snakes=None, ladders=None):
     """
     params:
     state: int - player's current position in the board
     dice_value: int - amount to move on the board
-    snakes: list = (start, end): represents a snake connecting squares 'start' and 'end'
+    snakes: list = (head, tail): represents a snake connecting squares 'head' and 'tail'
+    ladders: list = (bottom, top): represents a ladder connecting squares 'bottom' and 'top'
 
     return: int - state after movement
     """
     if not snakes:
         snakes = []
+    
+    if not ladders:
+        ladders = []
 
     new_state = current_state + dice_value
 
@@ -23,6 +27,11 @@ def move(current_state, dice_value, snakes=None):
     for (head, tail) in snakes:
         if head == new_state:
             return tail
+
+    for (bottom, top) in ladders:
+        if bottom == new_state:
+            return top
+    
     return new_state
 
 

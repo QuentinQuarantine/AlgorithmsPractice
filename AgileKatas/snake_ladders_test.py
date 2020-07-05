@@ -35,8 +35,18 @@ class TestSum(unittest.TestCase):
             12
         )
 
-    # die_roll
+    def test_climbing_up_ladder_if_landing_on_bottom(self):
+        self.assertEqual(
+            move(1, 1, [(37, 12)], [(2, 12)]),
+            12)
 
+    def test_not_climbing_down_ladder_if_landing_on_top(self):
+        self.assertEqual(
+            move(8, 4, [(37, 12)], [(2, 12)]),
+            12
+        )
+
+    # die_roll
     def test_six_sides_die_roll(self):
         for _ in range(50):
             with self.subTest():
