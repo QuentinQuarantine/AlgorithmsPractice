@@ -4,7 +4,7 @@ from AgileKatas.snake_ladders import move, reset, die_roll, has_won, play
 
 
 class TestSum(unittest.TestCase):
-
+    # move
     def test_initial_state(self):
         self.assertEqual(reset(), 1)
 
@@ -23,6 +23,20 @@ class TestSum(unittest.TestCase):
             97
         )
 
+    def test_sliding_down_snake_if_landing_on_top(self):
+        self.assertEqual(
+            move(33, 4, [(37, 12)]),
+            12
+        )
+
+    def test_not_sliding_up_snake_if_landing_on_bottom(self):
+        self.assertEqual(
+            move(8, 4, [(37, 12)]),
+            12
+        )
+
+    # die_roll
+
     def test_six_sides_die_roll(self):
         for _ in range(50):
             with self.subTest():
@@ -34,6 +48,7 @@ class TestSum(unittest.TestCase):
         state_later = move(state_previous, die_value)
         self.assertEqual(state_previous + die_value, state_later)
 
+    # has_won
     @mock.patch('AgileKatas.snake_ladders.randint')
     def test_has_won(self, mocked_randint):
         mocked_randint.return_value = 3
