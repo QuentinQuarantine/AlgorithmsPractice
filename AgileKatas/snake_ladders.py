@@ -1,5 +1,6 @@
 # http://agilekatas.co.uk/katas/SnakesAndLadders-Kata
 
+from random import randint
 
 def move(state, dice_value):
     """
@@ -14,3 +15,9 @@ def move(state, dice_value):
 
 def reset():
     return 1
+
+def die_roll():
+    """
+    return: int - amount of steps to take in the board
+    """
+    return randint(1, 6)
