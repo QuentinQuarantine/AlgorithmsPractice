@@ -1,6 +1,10 @@
 import unittest
 from unittest import mock
-from AgileKatas.snake_ladders import move, reset, die_roll, has_won, play
+from AgileKatas.snake_ladders import (
+    move, reset,
+    die_roll, has_won,
+    play, determine_player_order
+)
 
 
 class TestSum(unittest.TestCase):
@@ -68,3 +72,51 @@ class TestSum(unittest.TestCase):
     def test_has_not_won(self, mocked_randint):
         mocked_randint.return_value = 4
         self.assertFalse(play(97))
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_determine_player_order_player_2_goes_first(self, mocked_randint):
+        mocked_randint.side_effect = [1, 6]
+        players = ['Player_1', 'Player_2']
+
+        player_order = determine_player_order(players)
+
+        self.assertEqual(
+            player_order,
+            ['Player_2', 'Player_1']
+        )
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_determine_player_order_player_1_goes_first(self, mocked_randint):
+        mocked_randint.side_effect = [6, 1]
+        players = ['Player_1', 'Player_2']
+
+        player_order = determine_player_order(players)
+
+        self.assertEqual(
+            player_order,
+            ['Player_1', 'Player_2']
+        )
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_determine_player_order_equal_dice_roll_player_2_goes_first(self, mocked_randint):
+        mocked_randint.side_effect = [6, 6, 1, 6]
+        players = ['Player_1', 'Player_2']
+
+        player_order = determine_player_order(players)
+
+        self.assertEqual(
+            player_order,
+            ['Player_2', 'Player_1']
+        )
+
+    @mock.patch('AgileKatas.snake_ladders.randint')
+    def test_determine_player_order_equal_dice_roll_player_1_goes_first(self, mocked_randint):
+        mocked_randint.side_effect = [6, 6, 6, 1]
+        players = ['Player_1', 'Player_2']
+
+        player_order = determine_player_order(players)
+
+        self.assertEqual(
+            player_order,
+            ['Player_1', 'Player_2']
+        )

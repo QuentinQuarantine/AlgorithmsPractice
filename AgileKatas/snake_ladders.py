@@ -15,7 +15,7 @@ def move(current_state, dice_value, snakes=None, ladders=None):
     """
     if not snakes:
         snakes = []
-    
+
     if not ladders:
         ladders = []
 
@@ -31,7 +31,7 @@ def move(current_state, dice_value, snakes=None, ladders=None):
     for (bottom, top) in ladders:
         if bottom == new_state:
             return top
-    
+
     return new_state
 
 
@@ -54,3 +54,14 @@ def play(state):
     die = die_roll()
     state = move(state, die)
     return has_won(state)
+
+
+def determine_player_order(players):
+    players_dict = {}
+    while True:
+        for player in players:
+            players_dict[player] = die_roll()
+        if players_dict[players[0]] != players_dict[players[1]]:
+            break
+
+    return sorted(players, key=lambda player: players_dict[player], reverse=True)
